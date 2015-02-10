@@ -1,0 +1,4 @@
+if ($("#taskModal2").length != 0)
+    $("#taskModal2").remove();
+$('#taskModal').append('<%= j render("form") %>');
+$('#taskModal').modal("show");

@@ -1,0 +1,7 @@
+if ($("#taskModal2").length != 0)
+    $("#taskModal2").remove();
+$('#taskModal').append('<%= j render("form") %>');
+$('#taskModal').modal("show");
+$('#event_start_1i').val(top.date.get('year'));
+$('#event_start_2i').val(top.date.get('month')+1);
+$('#event_start_3i').val(top.date.get('date'));

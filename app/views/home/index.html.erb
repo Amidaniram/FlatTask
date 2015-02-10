@@ -1,0 +1,17 @@
+<% content_for :jsblock do %>
+    <%= javascript_include_tag 'calendar' %>
+<% end %>
+<% if user_signed_in? %>
+    <span>Здравствуйте, <%= current_user.full_name && current_user.full_name != "" ? current_user.full_name : current_user.email %></span>
+    <%= link_to 'Выйти', destroy_user_session_path, :method => :delete %>
+    <%= link_to 'Edit', edit_user_registration_path %>
+<% else %>
+    <%= link_to 'Войти', new_user_session_path %> или <%= link_to 'Зарегистрироваться', new_user_registration_path %>
+<% end %><br>
+Показать события всех пользователей <input type="checkbox" id="showAll">
+
+<div id="calendar"></div>
+<div class="modal login-modal fade" id="taskModal" tabindex="-1" role="dialog" aria-hidden="true">
+</div>
+<%= link_to "new", new_event_path,  remote: true, id: "new_link", style: "display: none" %>
+<%= link_to "edit", edit_event_path(1),  remote: true, id: "edit_link", style: "display: none" %>

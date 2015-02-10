@@ -1,0 +1,46 @@
+<div class="modal-dialog" id="taskModal2">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">Вход</h4>
+    </div>
+    <div class="modal-body">
+      <div class="login-block">
+        <%= form_for @event, remote: true do |f| %>
+            <% if @event.id && @event.user != current_user %>
+              <% readonly = true %>
+            <% else %>
+              <% readonly = false %>
+            <% end %>
+
+            <div class="info-field">
+              <label class="info-field__item info-field__item--text">
+                <%= f.text_field :title, class: "info-field__item__input", placeholder: "Title", readonly: readonly  %>
+              </label>
+            </div>
+            <div class="info-field">
+              <label class="info-field__item info-field__item--text">
+                <%= f.date_select :start, disabled: readonly %>
+              </label>
+            </div>
+            <div class="info-field">
+              <label class="info-field__item info-field__item--select">
+                <%= f.select :repeat_type_id, RepeatType.all.collect { |c| [c.title, c.id]}, { include_blank: true }, disabled: readonly %>
+              </label>
+            </div>
+            <div class="info-field">
+              <% if readonly %>
+                Автор события: <%= @event.user.full_name && current_user.full_name != "" ? @event.user.full_name : @event.user.email %>
+              <% else %>
+                <%= f.submit %>
+              <% end %>
+
+            </div>
+        <% end %>
+        <% if @event.id && @event.user == current_user %>
+          <%= link_to "Delete", event_path(@event), remote: true, method: :delete, data: { confirm: 'Вы уверены?' } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
